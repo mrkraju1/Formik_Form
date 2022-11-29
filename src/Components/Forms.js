@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+// import { useState } from "react";
 
 const initialValues = {
   name: "",
@@ -26,7 +27,7 @@ const onSubmit = (values) => {
       console.log(res);
     });
 
-    window.location.reload()
+  // window.location.reload()
 };
 
 // const validate = (values) => {
@@ -57,19 +58,19 @@ const onSubmit = (values) => {
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .required("Name is a required field")
+    .required("*Name is a required field")
     .min(3, "Name must be at least 3 characters"),
   email: Yup.string()
     .email("Invalid format")
-    .required("Email is a required field"),
+    .required("*Email is a required field"),
   password: Yup.string()
-    .required("Please enter your password")
+    .required("*Please enter your password")
     .matches(
       /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
       "Password must contain at least 8 characters, one uppercase, one number and one special case character"
     ),
   confirmPassword: Yup.string()
-    .required("Please confirm your password")
+    .required("*Please confirm your password")
     .when("password", {
       is: (password) => (password && password.length > 0 ? true : false),
       then: Yup.string().oneOf([Yup.ref("password")], "Password doesn't match"),
@@ -83,6 +84,11 @@ const Forms = () => {
     // validate,
     validationSchema,
   });
+  // const [records, setRecords] = useState("");
+
+  // axios.get("http://localhost:9900/formik").then((res) => {
+  //   setRecords(res.data.user);
+  // });
 
   // console.log("Visited fields", formik.values);
 
