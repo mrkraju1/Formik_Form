@@ -25,6 +25,8 @@ const onSubmit = (values) => {
     .catch(function (res) {
       console.log(res);
     });
+
+    window.location.reload()
 };
 
 // const validate = (values) => {
