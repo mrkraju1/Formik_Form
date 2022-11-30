@@ -7,89 +7,93 @@ import { Table } from "react-bootstrap";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
-const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
-
-const onSubmit = (values) => {
-  console.log("formik values", values);
-
-  axios({
-    method: "POST",
-    url: "http://localhost:9900/formik",
-    data: values,
-  })
-    // axios
-    //   .post("http://localhost:9900/formik", {
-    //     values,
-    //   })
-    .then(function (res) {
-      console.log(res);
-      // alert("Successfully signed up!");
-    })
-    .catch(function (res) {
-      console.log(res);
-    });
-
-  // window.location.reload()
-};
-
-// const validate = (values) => {
-//   let errors = {};
-
-//   if (!values.name) {
-//     errors.name = "Required";
-//   } else if (!/^[A-Za-z]{3,20}$/i.test(values.name)) {
-//     errors.name = "Invalid name";
-//   }
-//   if (!values.email) {
-//     errors.email = "Required";
-//   } else if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(values.email)) {
-//     errors.email = "Inavlid email format";
-//   }
-//   if (!values.password) {
-//     errors.password = "Required";
-//   } else if (
-//     !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/i.test(
-//       values.password
-//     )
-//   ) {
-//     errors.password = "Invalid password format";
-//   }
-
-//   return errors;
-// };
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("*Name is a required field")
-    .min(3, "Name must be at least 3 characters"),
-  email: Yup.string()
-    .email("Invalid format")
-    .required("*Email is a required field"),
-  password: Yup.string()
-    .required("*Please enter your password")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
-    ),
-  confirmPassword: Yup.string()
-    .required("*Please confirm your password")
-    .when("password", {
-      is: (password) => (password && password.length > 0 ? true : false),
-      then: Yup.string().oneOf([Yup.ref("password")], "Password doesn't match"),
-    }),
-});
-
 const Forms = () => {
   const formik = useFormik({
-    initialValues,
-    onSubmit,
-    // validate,
-    validationSchema,
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+
+    onSubmit: (values) => {
+      console.log("formik values", values);
+
+      axios({
+        method: "POST",
+        url: "http://localhost:9900/formik",
+        data: values,
+      })
+        // axios
+        //   .post("http://localhost:9900/formik", {
+        //     values,
+        //   })
+        .then(function (res) {
+          console.log(res);
+          alert("Successfully signed up!");
+          formik.setValues({
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+
+      // window.location.reload()
+    },
+
+    // validate: (values) => {
+    //   let errors = {};
+
+    //   if (!values.name) {
+    //     errors.name = "Required";
+    //   } else if (!/^[A-Za-z]{3,20}$/i.test(values.name)) {
+    //     errors.name = "Invalid name";
+    //   }
+    //   if (!values.email) {
+    //     errors.email = "Required";
+    //   } else if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(values.email)) {
+    //     errors.email = "Inavlid email format";
+    //   }
+    //   if (!values.password) {
+    //     errors.password = "Required";
+    //   } else if (
+    //     !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/i.test(
+    //       values.password
+    //     )
+    //   ) {
+    //     errors.password = "Invalid password format";
+    //   }
+
+    //   return errors;
+    // },
+
+    validationSchema: Yup.object().shape({
+      name: Yup.string()
+        .required("*Name is a required field")
+        .min(3, "Name must be at least 3 characters"),
+      email: Yup.string()
+        .email("Invalid format")
+        .required("*Email is a required field"),
+      password: Yup.string()
+        .required("*Please enter your password")
+        .matches(
+          /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+          "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+        ),
+      confirmPassword: Yup.string()
+        .required("*Please confirm your password")
+        .when("password", {
+          is: (password) => (password && password.length > 0 ? true : false),
+          then: Yup.string().oneOf(
+            [Yup.ref("password")],
+            "Password doesn't match"
+          ),
+        }),
+    }),
   });
 
   const [APIData, setAPIData] = useState([]);
@@ -103,6 +107,12 @@ const Forms = () => {
     });
   };
 
+  // const updateUser = (id) => {
+  //   axios.put(`http://localhost:9900/formik/${id}`).then((res) => {
+
+  //   });
+  // };
+
   const deleteUser = (id) => {
     axios.delete(`http://localhost:9900/formik/${id}`).then((res) => {
       console.log(res);
@@ -111,7 +121,7 @@ const Forms = () => {
     });
   };
 
-  getUsers();
+  // getUsers();
 
   return (
     <div className="container">
