@@ -1,13 +1,14 @@
 .App {
-  display: flex;
-  justify-content: center;
+  /* background-color: aliceblue; */
+  background-image: url(https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg?w=1380&t=st=1669741229~exp=1669741829~hmac=31f7dff0ebe0d8d1e0abe0e7a4f48454910b92ce147a8283aca81c5029be3a5d);
 }
 .form-css {
   width: 100%;
-  margin-top: 3.5rem;
+  margin: 3.3rem 0rem;
   padding: 30px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  background-color: white;
 }
 .font-css{
   font-family: 'Times New Roman', Times, serif;

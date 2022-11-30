@@ -93,84 +93,93 @@ const Forms = () => {
   // console.log("Visited fields", formik.values);
 
   return (
-    <div>
-      <form className="form-css" onSubmit={formik.handleSubmit}>
-        <h2 className="font-css">Formik Form</h2>
-        <div className="mb-3">
-          <label htmlFor="exampleInputName1" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur} // To hide error msgs
-            value={formik.values.name}
-            autoComplete="off" // To stop suggestions
-          />
-          {formik.touched.name && formik.errors.name ? (
-            <div className="error-color">{formik.errors.name}</div>
-          ) : null}
+    <div className="container">
+      <div className="row">
+        <div className="col-md-3"></div>
+        <div className="col-md-6">
+          <form className="form-css" onSubmit={formik.handleSubmit}>
+            <h2 className="font-css">Formik Form</h2>
+            <div className="mb-3">
+              <label htmlFor="exampleInputName1" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur} // To hide error msgs
+                value={formik.values.name}
+                autoComplete="off" // To stop suggestions
+              />
+              {formik.touched.name && formik.errors.name ? (
+                <div className="error-color">{formik.errors.name}</div>
+              ) : null}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputEmail1" className="form-label">
+                E-mail
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                autoComplete="off"
+                // aria-describedby="emailHelp"
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <div className="error-color">{formik.errors.email}</div>
+              ) : null}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+              />
+              {formik.touched.password && formik.errors.password ? (
+                <div className="error-color">{formik.errors.password}</div>
+              ) : null}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.confirmPassword}
+              />
+              {formik.touched.confirmPassword &&
+              formik.errors.confirmPassword ? (
+                <div className="error-color">
+                  {formik.errors.confirmPassword}
+                </div>
+              ) : null}
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            E-mail
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            autoComplete="off"
-            // aria-describedby="emailHelp"
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="error-color">{formik.errors.email}</div>
-          ) : null}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <div className="error-color">{formik.errors.password}</div>
-          ) : null}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="confirmPassword"
-            name="confirmPassword"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.confirmPassword}
-          />
-          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div className="error-color">{formik.errors.confirmPassword}</div>
-          ) : null}
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+      <div className="col-md-3"></div>
+      </div>
     </div>
   );
 };
