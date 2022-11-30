@@ -28,7 +28,7 @@ const onSubmit = (values) => {
     //   })
     .then(function (res) {
       console.log(res);
-      alert("Successfully signed up!");
+      // alert("Successfully signed up!");
     })
     .catch(function (res) {
       console.log(res);
@@ -94,10 +94,24 @@ const Forms = () => {
 
   const [APIData, setAPIData] = useState([]);
   useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = () => {
     axios.get("http://localhost:9900/formik").then((res) => {
       setAPIData(res.data.users);
     });
-  }, []);
+  };
+
+  const deleteUser = (id) => {
+    axios.delete(`http://localhost:9900/formik/${id}`).then((res) => {
+      console.log(res);
+      // alert("user deleted");
+      getUsers();
+    });
+  };
+
+  getUsers();
 
   return (
     <div className="container">
@@ -115,7 +129,7 @@ const Forms = () => {
             <tbody>
               {APIData.map((item) => {
                 return (
-                  <tr>
+                  <tr key={item._id}>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.password}</td>
@@ -123,7 +137,10 @@ const Forms = () => {
                       <button className="btn btn-warning me-2">
                         <FaEdit />
                       </button>
-                      <button className="btn btn-danger">
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteUser(item._id)}
+                      >
                         <RiDeleteBin5Line />
                       </button>
                     </td>
