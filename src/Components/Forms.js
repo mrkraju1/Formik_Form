@@ -2,7 +2,10 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-// import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Table } from "react-bootstrap";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const initialValues = {
   name: "",
@@ -19,6 +22,10 @@ const onSubmit = (values) => {
     url: "http://localhost:9900/formik",
     data: values,
   })
+    // axios
+    //   .post("http://localhost:9900/formik", {
+    //     values,
+    //   })
     .then(function (res) {
       console.log(res);
       alert("Successfully signed up!");
@@ -84,21 +91,51 @@ const Forms = () => {
     // validate,
     validationSchema,
   });
-  // const [records, setRecords] = useState("");
 
-  // axios.get("http://localhost:9900/formik").then((res) => {
-  //   setRecords(res.data.user);
-  // });
-
-  // console.log("Visited fields", formik.values);
+  const [APIData, setAPIData] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:9900/formik").then((res) => {
+      setAPIData(res.data.users);
+    });
+  }, []);
 
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-3"></div>
-        <div className="col-md-6">
+        <div className="col-md-8">
+          <Table striped bordered hover variant="light" className="table-css">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>E-mail</th>
+                <th>Password</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {APIData.map((item) => {
+                return (
+                  <tr>
+                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.password}</td>
+                    <td>
+                      <button className="btn btn-warning me-2">
+                        <FaEdit />
+                      </button>
+                      <button className="btn btn-danger">
+                        <RiDeleteBin5Line />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+        <div className="col-md-4">
           <form className="form-css" onSubmit={formik.handleSubmit}>
-            <h2 className="font-css">Formik Form</h2>
+            <h2 className="font-css mb-3">Formik Form</h2>
             <div className="mb-3">
               <label htmlFor="exampleInputName1" className="form-label">
                 Name
@@ -178,7 +215,7 @@ const Forms = () => {
             </button>
           </form>
         </div>
-      <div className="col-md-3"></div>
+        {/* <div className="col-md-3"></div> */}
       </div>
     </div>
   );
