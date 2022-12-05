@@ -161,8 +161,9 @@ const Forms = () => {
           </Table>
         </div>
         <div className="col-md-4">
-          <form className="form-css" onSubmit={formik.handleSubmit}>
-            <h2 className="font-css mb-3">Formik Form</h2>
+          <form onSubmit={formik.handleSubmit}>
+            <h2 className="font-css rounded-top">Formik Form</h2>
+            <div className="form-css rounded-bottom">
             <div className="mb-3">
               <label htmlFor="exampleInputName1" className="form-label">
                 Name
@@ -240,6 +241,7 @@ const Forms = () => {
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
+            </div>
           </form>
         </div>
         {/* <div className="col-md-3"></div> */}
